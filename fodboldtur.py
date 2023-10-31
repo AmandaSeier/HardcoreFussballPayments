@@ -10,31 +10,31 @@ def afslut():
     outfile = open(filename, 'wb')
     pickle.dump(fodboldtur, outfile)
     outfile.close()
-    print("Programmet er afsluttet!") # printer at programmet er afsluttet
+    print("Programmet er afsluttet!")   # printer at programmet er afsluttet
 
 
 # FUNKTION DER PRINTER LISTEN/DICT MED
 def printliste():
     for item in fodboldtur.items():
-        print(item) # tjekker alle elementerne i dict og printer dem
-    menu() # kalder funktionen menu
+        print(item)   # tjekker alle elementerne i dict og printer dem
+    menu()  # kalder funktionen menu
 
 
 # FUNKTION DER TAGER I MOD BETALINGER FRA BRUGEREN
 def indbetal():
-    navn = input("Navn: ") # spørger brugeren om deres navn
+    navn = input("Navn: ")  # spørger brugeren om deres navn
 
-    if navn in fodboldtur.keys(): # hvis brugerens navn eksisterer i dict bliver de spurgt om et beløb
+    if navn in fodboldtur.keys():   # hvis brugerens navn eksisterer i dict bliver de spurgt om et beløb
         beløb = input("Indtast beløb, som du ønsker at betale: ")
         beløb = int(beløb)
 
-    else: # står det ikke i dict printes dette til terminalen
+    else:   # står det ikke i dict printes dette til terminalen
         print("Navnet du har skrevet findes ikke, prøv igen")
-        indbetal() # kalder funktionen menu, som giver brugeren mulighed for at indtaste et nyt navn
+        indbetal()  # kalder funktionen menu, som giver brugeren mulighed for at indtaste et nyt navn
 
 
 # FUNKTION DER PRINTER NAVNE PÅ DE TRE PERSONER DER MANGLER AT BETALE MEST
-def hvemManglerMest():
+def hvemManglerMest():     # hjælp fra dem der christoffer der, ham den seje
     elementer = list(fodboldtur.items())
     elementer.sort(key = lambda x: x[1])
     treLavesteVærdier = elementer[:3]
@@ -58,16 +58,20 @@ def menu():
     # den gemte værdi bruges i denne match case, alt efter hvad brugeren skrev vil følgende funktioner kaldes
     match valg:
         case "1":
-            printliste() # funktionen printListe kaldes
+            printliste()    # funktionen printListe kaldes
+
         case "2":
-            indbetal() # funktionen indbetal kaldes
+            indbetal()  # funktionen indbetal kaldes
+
         case "3":
-            hvemManglerMest() # funktionen hvemManglerMest kaldes
+            hvemManglerMest()   # funktionen hvemManglerMest kaldes
+
         case "4":
-            afslut() # funktionen afslut kaldes
-        case _: # hvis valget er ugyldigt vil denne meddelelse printes
+            afslut()    # funktionen afslut kaldes
+
+        case _:   # hvis valget er ugyldigt vil denne meddelelse printes
             print("Ugyldigt valg. Skriv enten 1, 2, 3 eller 4, prøv igen!")
-            menu() # kalder funktionen menu
+            menu()  # kalder funktionen menu
 
 
 infile = open(filename, "rb")
