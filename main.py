@@ -2,7 +2,7 @@ import pickle
 
 filename = 'dict/betalinger.pk'
 
-fodboldtur = {}
+fodboldtur = {} # fußball dict :J
 
 
 # FUNKTION DER AFSLUTTER PROGRAMMET
@@ -24,18 +24,23 @@ def printliste():
 def indbetal():
     navn = input("Navn: ") # spørger brugeren om deres navn
 
-    if navn in fodboldtur.keys(): # hvis brugerens navn eksisterer i dict bliver de spurgt om beløb
+    if navn in fodboldtur.keys(): # hvis brugerens navn eksisterer i dict bliver de spurgt om et beløb
         beløb = input("Indtast beløb, som du ønsker at betale: ")
         beløb = int(beløb)
 
     else: # står det ikke i dict printes dette til terminalen
         print("Navnet du har skrevet findes ikke, prøv igen")
-        indbetal() # kalder funktionen menu
+        indbetal() # kalder funktionen menu, som giver brugeren mulighed for at indtaste et nyt navn
 
 
 # FUNKTION DER PRINTER NAVNE PÅ DE TRE PERSONER DER MANGLER AT BETALE MEST
 def hvemManglerMest():
-    pass
+    elementer = list(fodboldtur.items())
+    elementer.sort(key = lambda x: x[1])
+    treLavesteVærdier = elementer[:3]
+
+    for key, value in treLavesteVærdier:
+        print(f'Navn: {key}, Beløb: {value}')
 
 
 # MENU FUNKTIONEN
