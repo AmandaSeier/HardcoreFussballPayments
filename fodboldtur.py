@@ -1,8 +1,8 @@
 # IMPORTING PICKLE - I DONT EVEN LIKE PICKLES :(
 import pickle
-from colorama import Fore, Back, Style, init
+from colorama import Fore, init
 
-init(autoreset = True)
+init(autoreset=True)
 
 filename = 'dict/betalinger.pk'
 
@@ -19,11 +19,11 @@ def gem():
 # FUNKTION DER INDEHOLDER INFORMATION OMKRING TUREN
 def information():
     total = sum(fodboldtur.values())
+    print(Fore.LIGHTMAGENTA_EX + "\nHer er lidt information omkring turen!")
+    print(f"\nTil denne tur skal der betales 4500 kr i alt \n"
+          f"Der er lige nu betalt {total} ud af 4500 kr")
 
-    print(f"\nTil denne tur skal der betales 4500 kroner i alt \n "
-          f"Der er lige nu betalt {total} kroner")
-
-    if total > 4500:
+    if total >= 4500:
         print(Fore.GREEN + "\nSheesh god tur, y'all are good to go!!!")
     else:
         print(Fore.RED + "\nPoor motherfuckers smh!!!")
@@ -45,24 +45,29 @@ def printliste():
 def indbetal():
     print(Fore.LIGHTBLUE_EX + "\nDe valgte at indbetale et beløb\n")
 
+    maxBeløb = 562.5
     navn = input("Deres fulde navn: ")
 
     if navn in fodboldtur.keys():
-        beløb = None
-        while beløb is None or beløb < 0 and sum(fodboldtur.values()) < 4500:
-            beløb_input = input("\nIndtast det beløb, som de ønsker at betale: ")
-            try:
-                beløb = int(beløb_input)
-                if beløb < 0:
-                    print(Fore.RED + "\nHovsa, deres beløb er negativt! Prøv igen!")
-            except ValueError:
-                print("\nIndtast venligst et positivt beløb: ")
-
-        if sum(fodboldtur.values()) + beløb <= 4500:
-            fodboldtur[navn] += beløb
-            print("\nDeres betaling var succesfuld!")
+        beløb = fodboldtur[navn]
+        if beløb < maxBeløb:
+            nytBeløb = input("\nIndtast beløb, som de ønsker at betale: ")
+            nytBeløb = float(nytBeløb)
+            if nytBeløb > 0:
+                if beløb + nytBeløb > maxBeløb:
+                    print(f"\nDe kan ikke betale mere end {maxBeløb - beløb} kr!")
+                else:
+                    fodboldtur[navn] += nytBeløb
+                    print("\nDeres betaling var succesfuld!")
+                if beløb >= maxBeløb:
+                    print(f"\nDe kan ikke betale mere, da de allerede har betalt {beløb} kr")
+            else:
+                print(f"\nDe kan ikke betale et negativt beløb {nytBeløb}. Prøv igen!")
         else:
-            print(Fore.RED + "\nSummen af alle beløb overstiger 4500. De kan derfor ikke indbetale mere!")
+            print(f"\nDe kan ikke betale mere, da de allerede har betalt {beløb} kr")
+    else:
+        print("\nNavnet de har angivet eksisterer ikke, prøv igen!")
+        indbetal()
 
     menu()
 
@@ -80,7 +85,7 @@ def fjernBeløb():
             try:
                 beløb = int(beløb_input)
                 if beløb < 0:
-                    print(Fore.RED + "\nHovsa, det indtastede beløb er negativt! Prøv igen.")
+                    print(Fore.RED + "\nHovsa, det indtastede beløb er negativt! Prøv igen")
             except ValueError:
                 print("\nIndtast venligst et gyldigt heltal for beløbet.")
     else:
@@ -94,17 +99,17 @@ def fjernBeløb():
 
 
 # FUNKTION DER PRINTER NAVNE PÅ DE TRE PERSONER DER MANGLER AT BETALE MEST
-# btw med lidt hjælp fra dem der christoffer der, ham den seje du ved.
+# btw med lidt hjælp fra dem der christoffer der, ham den seje du ved nok B-)
 def hvemManglerMest():
-    print(Fore.LIGHTMAGENTA_EX + "\nHer er de tre personer der har betalt mindst")
+    print(Fore.LIGHTMAGENTA_EX + "\nHer er de tre personer der har betalt mindst \n")
 
     elementer = list(fodboldtur.items())
-    elementer.sort(key = lambda x: x[1])
+    elementer.sort(key=lambda x: x[1])
     treLavesteVærdier = elementer[:3]
 
     # printer navne og beløb på tre der har betalt mindst
     for key, value in treLavesteVærdier:
-        print(f"Navn: {key}, Beløb: {value}")
+        print(f"NAVN: {key} | BELØB: {value}")
 
     menu()
 
@@ -149,6 +154,7 @@ def menu():
             ugyldigValg()
 
     gem()
+
 
 infile = open(filename, "rb")
 fodboldtur = pickle.load(infile)
