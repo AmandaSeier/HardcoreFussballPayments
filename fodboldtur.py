@@ -79,21 +79,22 @@ def fjernBeløb():
     navn = input("\nHvem ønsker de at fjerne et beløb fra: ")
 
     if navn in fodboldtur.keys():
-        beløb = None
-        while beløb is None or beløb < 0:
-            beløb_input = input("\nHvor meget ønsker de at fjerne: ")
-            try:
-                beløb = int(beløb_input)
-                if beløb < 0:
-                    print(Fore.RED + "\nHovsa, det indtastede beløb er negativt! Prøv igen")
-            except ValueError:
-                print("\nIndtast venligst et gyldigt heltal for beløbet.")
+        beløb = fodboldtur[navn]
+        if beløb > 0:
+            nytBeløb = input("\nIndtast beløb, som de ønsker at fjerne: ")
+            nytBeløb = float(nytBeløb)
+            if nytBeløb < 0:
+                fodboldtur[navn] += nytBeløb
+                print("\nDeres fjernelse var succesfuld!")
+            else:
+                print("\nDe skal indtaste et negativt tal: ")
+                fjernBeløb()
+        else:
+            print("\nDe kan ikke fjerne flere penge end de har betalt!")
+            fjernBeløb()
     else:
-        print("\nNavnet de har skrevet findes ikke, prøv igen")
+        print("\nNavnet de har angivet eksisterer ikke, prøv igen!")
         fjernBeløb()
-        return
-
-    fodboldtur[navn] -= beløb
 
     menu()
 
