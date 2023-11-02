@@ -18,6 +18,14 @@ def gem():
     outfile.close()
 
 
+def vilDuSlutte():
+    svar = input(Fore.BLUE + "\nØnsker de at slutte programmet: ").lower()
+
+    if svar == "nej":
+        menu()
+    else:
+        print(Fore.RED + "\nProgrammet er afsluttet!")
+
 # FUNKTION DER INDEHOLDER INFORMATION OMKRING TUREN OG BETALINGEN
 def information():
     total = sum(fodboldtur.values())
@@ -30,7 +38,7 @@ def information():
     else:
         print(Fore.RED + "\nPoor motherfuckers smh!!!")
 
-    menu()
+    vilDuSlutte()
 
 
 # FUNKTION DER PRINTER LISTEN/DICT SOM STATUS OVER HVOR MEGET DE FORSKELLIGE HAR BETALT
@@ -40,7 +48,7 @@ def printliste():
     for item in fodboldtur.items():
         print(item)
 
-    menu()
+    vilDuSlutte()
 
 
 # FUNKTION DER TAGER I MOD BETALINGER FRA BRUGEREN
@@ -76,7 +84,7 @@ def indbetal():
         print(Fore.RED + "\nNavnet de har angivet eksisterer ikke, prøv igen!")
         indbetal()
 
-    menu()
+    vilDuSlutte()
 
 
 def fjernBeløb():
@@ -110,7 +118,7 @@ def fjernBeløb():
         print(Fore.RED + "\nNavnet de har angivet eksisterer ikke, prøv igen!")
         indbetal()
 
-    menu()
+    vilDuSlutte()
 
 
 # FUNKTION DER FINDER DE TRE DER MANGLER AT BETALE MEST
@@ -130,14 +138,14 @@ def hvemManglerMest():
 
     print(Fore.LIGHTYELLOW_EX + "\nI må hellere snart se at få betalt jeres del!")
 
-    menu()
+    vilDuSlutte()
 
 
 # FUNKTION TIL HVIS BRUGEREN VÆLGER ET UGYLDIGT TAL
 def ugyldigValg():
     print(Fore.RED + "\nUgyldigt valg. Skriv enten 1, 2, 3, 4, 5 eller 6, prøv igen!")
 
-    menu()
+    vilDuSlutte()
 
 
 # MENU FUNKTIONEN
@@ -168,7 +176,7 @@ def menu():
         case "5":
             information()
         case "6":
-            print(Fore.LIGHTYELLOW_EX + "\nProgrammet er nu afsluttet!")
+            vilDuSlutte()
         case _:
             ugyldigValg()
 
