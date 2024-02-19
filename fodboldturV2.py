@@ -9,12 +9,16 @@ init(autoreset=True)
 filename = 'dict/betalinger.pk'
 fodboldtur = {}
 
-def load_data() -> dict:
-    global fodboldtur
-    infile = open(filename, "rb")
-    fodboldtur = pickle.load(infile)
-    infile.close()
-    return fodboldtur
+def load_data(filename: str) -> dict:
+    try:
+        with open(filename, "rb") as infile:
+            fodboldtur = pickle.load(infile)
+            fodboldtur_formatted = {navn.strip().lower(): beløb for navn, beløb in fodboldtur.items()}
+            print("Loaded data from file:", fodboldtur_formatted)
+            return fodboldtur_formatted
+    except FileNotFoundError:
+        print("Filen blev ikke fundet")
+        return {}
 
 # FUNKTION DER GEMMER BELØB OG UPDATER DICT
 def gem():

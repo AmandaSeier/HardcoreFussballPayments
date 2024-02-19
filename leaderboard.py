@@ -1,5 +1,7 @@
 from tkinter import *
 
+# NEVER FUCKING USED LOL
+
 class Leaderboard:
     def __init__(self, master):
         self.master = master
